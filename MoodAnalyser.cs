@@ -6,32 +6,42 @@ using System.Threading.Tasks;
 
 namespace MoodAnalyzer
 {
-    public  class MoodAnalyser
+    public class MoodAnalyser
     {
-        
-            string message;
 
-            public MoodAnalyser(string message)
-            {
-                this.message = message;
-            }
 
-            public string AnalyzeMood()
+        string message;
+
+        public MoodAnalyser(string message)
+        {
+            this.message = message;
+        }
+
+        public string AnalyzeMood()
+        {
+            try
             {
-                try
+                if (message.Equals(string.Empty))
                 {
-                    if (this.message.Contains("Sad"))
-                        return "SAD";
-                    else
-                        return "HAPPY";
+                    throw new CustomException(CustomException.ExceptionType.EMPTY_MESSAGE, "Mood should not be empty");
                 }
-                catch (NullReferenceException)
-                {
 
+                if (this.message.Contains("Sad"))
+                {
+                    return "SAD";
+                }
+                else
+                {
                     return "HAPPY";
                 }
-
             }
+            catch (NullReferenceException)
+            {
+                throw new CustomException(CustomException.ExceptionType.NULL_MESSAGE, "Mood should not be null");
+            }
+
         }
+    }
 }
+
 
